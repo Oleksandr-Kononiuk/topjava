@@ -1,23 +1,23 @@
 package ru.javawebinar.topjava.dao.impl;
 
 import ru.javawebinar.topjava.dao.MealDao;
-import ru.javawebinar.topjava.model.UserMeal;
+import ru.javawebinar.topjava.model.Meal;
 
 public class MealDaoImpl implements MealDao {
 
 
     @Override
-    public void create(UserMeal meal) {
+    public void create(Meal meal) {
 
     }
 
     @Override
-    public UserMeal read(long id) {
+    public Meal read(long id) {
         return null;
     }
 
     @Override
-    public UserMeal update(long id, UserMeal meal) {
+    public Meal update(long id, Meal meal) {
         return null;
     }
 

@@ -1,11 +1,11 @@
 package ru.javawebinar.topjava.dao;
 
-import ru.javawebinar.topjava.model.UserMeal;
+import ru.javawebinar.topjava.model.Meal;
 
 public interface MealDao {
 
-    void create(UserMeal meal);
-    UserMeal read(long id);
-    UserMeal update(long id, UserMeal meal);
+    void create(Meal meal);
+    Meal read(long id);
+    Meal update(long id, Meal meal);
     void delete(long id);
 }
