@@ -5,7 +5,6 @@ import ru.javawebinar.topjava.model.Meal;
 
 public class MealDaoImpl implements MealDao {
 
-
     @Override
     public void create(Meal meal) {
 
