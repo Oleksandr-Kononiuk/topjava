@@ -21,7 +21,7 @@ public class MealServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.debug("redirect to users");
         List<UserMealWithExcess> mealList = UserMealsUtil.filteredByCycles(
-                UserMealsUtil.fillMealList(),
+                UserMealsUtil.generateMealList(),
                 LocalTime.of(7, 0), LocalTime.of(12, 0), UserMealsUtil.CALORIES_PER_DAY);
 
 //        request.getRequestDispatcher("/meals.jsp").forward(request, response);

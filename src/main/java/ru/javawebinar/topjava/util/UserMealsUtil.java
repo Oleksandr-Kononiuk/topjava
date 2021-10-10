@@ -23,7 +23,7 @@ public class UserMealsUtil {
             );
 
     public static void main(String[] args) {
-        List<UserMeal> meals = fillMealList();
+        List<UserMeal> meals = generateMealList();
 
         List<UserMealWithExcess> mealsTo = filteredByCycles(meals, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000);
         mealsTo.forEach(System.out::println);
@@ -66,7 +66,7 @@ public class UserMealsUtil {
                 .collect(Collectors.toList());
     }
 
-    public static List<UserMeal> fillMealList() {
+    public static List<UserMeal> generateMealList() {
         return Arrays.asList(
                 new UserMeal(LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500),
                 new UserMeal(LocalDateTime.of(2020, Month.JANUARY, 30, 13, 0), "Обед", 1000),
