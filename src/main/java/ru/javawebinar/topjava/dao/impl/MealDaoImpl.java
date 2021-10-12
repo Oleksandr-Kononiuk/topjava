@@ -6,13 +6,16 @@ import ru.javawebinar.topjava.util.MealsUtil;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class MealDaoImpl implements MealDao {
 
     private List<Meal> meals = MealsUtil.generateMealList();
+    private static final AtomicLong COUNTER = new AtomicLong(0);
 
     @Override
     public void add(Meal meal) {
+        meal.setId(COUNTER.incrementAndGet());
         meals.add(meal);
     }
 
