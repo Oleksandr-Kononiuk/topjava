@@ -9,6 +9,7 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class MealsUtil {
     public static final int CALORIES_PER_DAY = 2000;
@@ -53,6 +54,7 @@ public class MealsUtil {
         Meal m7 = new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 20, 0), "Ужин", 410);
         m7.setId(7);
 
-        return Arrays.asList(m1, m2, m3, m4, m5, m6, m7);
+        return Stream.of(m1, m2, m3, m4, m5, m6, m7)
+                .collect(Collectors.toList());
     }
 }

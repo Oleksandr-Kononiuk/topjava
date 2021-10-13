@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class MealDaoImpl implements MealDao {
 
     private List<Meal> meals = MealsUtil.generateMealList();
-    private static final AtomicLong COUNTER = new AtomicLong(0);
+    private static final AtomicLong COUNTER = new AtomicLong(7); // todo first 7 value is hardcoded in MealUtils
 
     @Override
     public void add(Meal meal) {
@@ -48,7 +48,7 @@ public class MealDaoImpl implements MealDao {
 
     @Override
     public void delete(long id) {
-        meals.removeIf((meal -> meal.getId() == id));
+        meals.remove(findById(id));
     }
 
     public List<Meal> getMeals() {

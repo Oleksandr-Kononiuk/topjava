@@ -5,6 +5,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 <html>
 <head>
     <title>Meals</title>
@@ -15,7 +17,8 @@
 <h2>Meals</h2>
 
 <br>
-<input type="button" value="Add meal" onclick="window.location.href = 'create-update-meal.jsp'">
+<input type="button" value="Add meal"
+       onclick="window.location.href = 'meals?action=add'">
 <br>
 <br>
 
@@ -28,24 +31,19 @@
     </tr>
 
     <c:forEach var="meal" items="${mealList}">
-
-        <c:url var="updateButton" value="meals.jsp">
-            <c:param name="meal" value="${meal.calories}"/>
-        </c:url>
-
-        <c:url var="deleteButton" value="meals.jsp">
-            <c:param name="meal" value="${meal.calories}"/>
-        </c:url>
-
         <tr>
+<%--            todo <td><<fmt:formatDate pattern="yyyy-MMM-dd" value="${user.dob}"</td>--%>
             <td>${meal.dateTime}</td>
             <td>${meal.description}</td>
             <td>${meal.calories}</td>
             <td>
-                <input type="button" value="Update" onclick="window.location.href = 'create-update-meal.jsp'">
+                <input type="button" value="Update"
+                       onclick="window.location.href = 'meals?action=update&mealId=<c:out value="${meal.id}"/>'">
+<%--                <a href="meals?action=update&mealId=<c:out value="${meal.id}"/>">Update</a>--%>
             </td>
             <td>
-                <input type="button" value="Delete" onclick="window.location.href = '${deleteButton}'">
+                <input type="button" value="Delete"
+                       onclick="window.location.href = 'meals?action=delete&mealId=<c:out value="${meal.id}"/>'">
             </td>
         </tr>
     </c:forEach>
