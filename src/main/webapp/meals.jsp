@@ -32,18 +32,17 @@
 
     <c:forEach var="meal" items="${mealList}">
         <tr>
-<%--            todo <td><<fmt:formatDate pattern="yyyy-MMM-dd" value="${user.dob}"</td>--%>
-            <td>${meal.dateTime}</td>
+            <td>${meal.dateTime.format( DateTimeFormatter.ofPattern("MM-dd-yyyy hh:mm"))}</td>
             <td>${meal.description}</td>
             <td>${meal.calories}</td>
             <td>
                 <input type="button" value="Update"
-                       onclick="window.location.href = 'meals?action=update&mealId=<c:out value="${meal.id}"/>'">
+                       onclick="window.location.href = 'meals?action=update&mealId=${meal.id}'"/>
 <%--                <a href="meals?action=update&mealId=<c:out value="${meal.id}"/>">Update</a>--%>
             </td>
             <td>
                 <input type="button" value="Delete"
-                       onclick="window.location.href = 'meals?action=delete&mealId=<c:out value="${meal.id}"/>'">
+                       onclick="window.location.href = 'meals?action=delete&mealId=${meal.id}'"/>
             </td>
         </tr>
     </c:forEach>

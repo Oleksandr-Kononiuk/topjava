@@ -46,14 +46,14 @@ public class MealServlet extends HttpServlet {
             mealDao.delete(mealId);
             forForward = MEALS;
             request.setAttribute("mealList", mealDao.findAll());
-            log.debug("action == delete, setAttribute(\"mealList\"), forForward = MEALS");
+            log.debug("action == delete, setAttribute(\"mealList\"), forForward = MEALS mealId = " + mealId);
 
         } else if (action.equalsIgnoreCase("update")) {
             forForward = CREATE_UPDATE;
             long mealId = Long.parseLong(request.getParameter("mealId"));
             Meal mealForUpdate = mealDao.findById(mealId);
             request.setAttribute("mealForUpdate", mealForUpdate);
-            log.debug("action == update, setAttribute(\"mealForUpdate\"), forForward = CREATE_UPDATE, mealForUpdate=" + mealForUpdate.toString());
+            log.debug("action == update, setAttribute(\"mealForUpdate\"), forForward = CREATE_UPDATE, mealId = " + mealId);
 
         } else if (action.equalsIgnoreCase("add")) {
             forForward = CREATE_UPDATE;
@@ -74,7 +74,7 @@ public class MealServlet extends HttpServlet {
         req.setCharacterEncoding("UTF8");
 
         LocalDateTime time = LocalDateTime.parse(req.getParameter("date-time"));
-        time.format(dateFormatter);
+        //time.format(dateFormatter);
         String description = req.getParameter("description");
         int calories = Integer.parseInt(req.getParameter("calories"));
 

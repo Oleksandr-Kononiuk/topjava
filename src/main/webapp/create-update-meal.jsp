@@ -20,14 +20,12 @@
 <br>
 
 <form method="POST" action='meals?action=edit&mealId=<c:out value="${param.mealId}"/>' name="frmEditUser">
-    <input type="hidden" name="mealId" value="<c:out value="${user.userid}" />"/>
-
     <table>
         <tr>
             <td width="20%">DateTime:</td>
             <td width="80%">
                 <input type="datetime-local" name="date-time" size="20"
-                       value="<fmt:formatDate pattern="MM/dd/yyyy hh:mm" value="${meal.dateTime}"/>" />
+                       value="<fmt:formatDate pattern="MM-dd-yyyy hh:mm" value="${meal.dateTime}"/>" />
             </td>
         </tr>
 <%--        todo placeholder like old value of parameter?--%>
