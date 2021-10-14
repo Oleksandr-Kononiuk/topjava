@@ -1,4 +1,4 @@
-<%--
+<%@ page import="ru.javawebinar.topjava.model.Meal" %><%--
   Created by IntelliJ IDEA.
   User: Oleksandr Kononiuk
   Date: 10.10.2021
@@ -19,6 +19,19 @@
 <h2>Edit Form</h2>
 <br>
 
+<%
+    String description;
+    String calories;
+    Meal meal1 = (Meal) request.getAttribute("mealForUpdate");
+    if (meal1 != null) {
+        description = meal1.getDescription();
+        calories = Integer.toString(meal1.getCalories());
+    } else {
+        description = "description";
+        calories = "calories";
+    }
+%>
+
 <form method="POST" action='meals?action=update&mealId=<c:out value="${param.mealId}"/>' name="frmEditUser">
     <table>
         <tr>
@@ -32,14 +45,14 @@
         <tr>
             <td width="20%">Description:</td>
             <td width="80%">
-                <input type="text" name="description" size="20" placeholder="description" content="${meal.description}"
+                <input type="text" name="description" size="22" placeholder=<%=description%>
                        value="<c:out value="${meal.description}"/>" />
             </td>
         </tr>
         <tr>
             <td width="20%">Calories:</td>
             <td width="80%">
-                <input type="text" name="calories" size="20" required placeholder="calories"
+                <input type="text" name="calories" size="22" placeholder=<%=calories%>
                        value="<c:out value="${meal.calories}"/>" />
             </td>
         </tr>
