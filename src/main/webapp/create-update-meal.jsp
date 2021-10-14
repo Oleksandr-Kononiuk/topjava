@@ -1,8 +1,9 @@
-<%@ page import="ru.javawebinar.topjava.model.Meal" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: Oleksandr Kononiuk
   Date: 10.10.2021
 --%>
+<%@ page import="ru.javawebinar.topjava.model.Meal" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -41,7 +42,7 @@
                        value="<fmt:formatDate pattern="MM-dd-yyyy hh:mm" value="${meal.dateTime}"/>" />
             </td>
         </tr>
-<%--        todo placeholder like old value of parameter?--%>
+
         <tr>
             <td width="20%">Description:</td>
             <td width="80%">

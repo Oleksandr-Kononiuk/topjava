@@ -33,11 +33,11 @@ public class MealServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.debug("redirect to meals GET");
-        String forward;
+        String forward = MEALS;
         String action = request.getParameter("action");
 
         if (action != null) {
-            switch (action) {
+            switch (action.toLowerCase()) {
                 case "delete" :
                     long mealId = Long.parseLong(request.getParameter("mealId"));
                     mealDao.delete(mealId);
@@ -48,18 +48,13 @@ public class MealServlet extends HttpServlet {
                 case "update" :
                     forward = CREATE_UPDATE;
                     long id = Long.parseLong(request.getParameter("mealId"));
-                    Meal mealForUpdate = mealDao.findById(id);
-                    request.setAttribute("mealForUpdate", mealForUpdate);
+                    request.setAttribute("mealForUpdate", mealDao.findById(id));
                     log.debug("action=update, setAttribute(\"mealForUpdate\"), forward=CREATE_UPDATE, id=" + id);
                     break;
                 case "add" :
                     forward = CREATE_UPDATE;
                     log.debug("action=add, forward=CREATE_UPDATE");
                     break;
-                default:
-                    forward = MEALS;
-                    request.setAttribute("mealList", MealsUtil.filteredByStreams(mealDao.findAll(), MealsUtil.CALORIES_PER_DAY));
-                    log.debug("action=null, setAttribute(\"mealList\"), forward=MEALS");
             }
         } else {
             forward = MEALS;
@@ -76,7 +71,6 @@ public class MealServlet extends HttpServlet {
         req.setCharacterEncoding("UTF8");
 
         LocalDateTime time = LocalDateTime.parse(req.getParameter("date-time"));
-        time.format(dateFormatter);
         String description = req.getParameter("description");
         int calories = Integer.parseInt(req.getParameter("calories"));
 
