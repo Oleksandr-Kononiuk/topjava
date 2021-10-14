@@ -1,4 +1,4 @@
-<%@ page import="ru.javawebinar.topjava.model.Meal" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: Oleksandr Kononiuk
   Date: 10.10.2021
@@ -19,7 +19,7 @@
 <h2>Edit Form</h2>
 <br>
 
-<form method="POST" action='meals?action=edit&mealId=<c:out value="${param.mealId}"/>' name="frmEditUser">
+<form method="POST" action='meals?action=update&mealId=<c:out value="${param.mealId}"/>' name="frmEditUser">
     <table>
         <tr>
             <td width="20%">DateTime:</td>

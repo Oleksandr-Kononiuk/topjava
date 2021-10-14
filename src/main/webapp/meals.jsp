@@ -31,14 +31,13 @@
     </tr>
 
     <c:forEach var="meal" items="${mealList}">
-        <tr>
+        <tr style="color:${false ? 'red' : 'green'};">
             <td>${meal.dateTime.format( DateTimeFormatter.ofPattern("MM-dd-yyyy hh:mm"))}</td>
             <td>${meal.description}</td>
             <td>${meal.calories}</td>
             <td>
                 <input type="button" value="Update"
                        onclick="window.location.href = 'meals?action=update&mealId=${meal.id}'"/>
-<%--                <a href="meals?action=update&mealId=<c:out value="${meal.id}"/>">Update</a>--%>
             </td>
             <td>
                 <input type="button" value="Delete"

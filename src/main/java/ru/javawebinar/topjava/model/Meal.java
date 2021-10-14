@@ -43,4 +43,14 @@ public class Meal {
     public void setId(long id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "Meal{" +
+                "dateTime=" + dateTime +
+                ", description='" + description + '\'' +
+                ", calories=" + calories +
+                ", id=" + id +
+                '}';
+    }
 }

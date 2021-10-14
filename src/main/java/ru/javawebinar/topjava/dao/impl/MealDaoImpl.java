@@ -15,7 +15,9 @@ public class MealDaoImpl implements MealDao {
 
     @Override
     public void add(Meal meal) {
+        System.out.println(meal.getId());
         meal.setId(COUNTER.incrementAndGet());
+        System.out.println(meal.getId());
         meals.add(meal);
     }
 
@@ -34,16 +36,14 @@ public class MealDaoImpl implements MealDao {
 
     @Override
     public void update(long id, Meal meal) {
-        int index = 0;
         for(int i = 0; i < meals.size(); i++) {
             if (meals.get(i).getId() == id) {
+                meal.setId(id);
                 meals.remove(i);
-                index = i;
+                meals.add(i, meal);
                 break;
             }
         }
-        meals.add(index, meal);
-        //? meals.replaceAll(m -> meal);
     }
 
     @Override
