@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import ru.javawebinar.topjava.dao.MealDao;
 import ru.javawebinar.topjava.dao.impl.MealDaoImpl;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.util.MealsUtil;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -32,7 +33,7 @@ public class MealServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.debug("redirect to meals GET");
-        String forward = "";
+        String forward;
         String action = request.getParameter("action");
 
         if (action != null) {
@@ -41,7 +42,7 @@ public class MealServlet extends HttpServlet {
                     long mealId = Long.parseLong(request.getParameter("mealId"));
                     mealDao.delete(mealId);
                     forward = MEALS;
-                    request.setAttribute("mealList", mealDao.findAll());
+                    request.setAttribute("mealList", MealsUtil.filteredByStreams(mealDao.findAll(), MealsUtil.CALORIES_PER_DAY));
                     log.debug("action=delete, setAttribute(\"mealList\"), forward=MEALS, id=" + mealId);
                     break;
                 case "update" :
@@ -57,12 +58,12 @@ public class MealServlet extends HttpServlet {
                     break;
                 default:
                     forward = MEALS;
-                    request.setAttribute("mealList", mealDao.findAll());
+                    request.setAttribute("mealList", MealsUtil.filteredByStreams(mealDao.findAll(), MealsUtil.CALORIES_PER_DAY));
                     log.debug("action=null, setAttribute(\"mealList\"), forward=MEALS");
             }
         } else {
             forward = MEALS;
-            request.setAttribute("mealList", mealDao.findAll());
+            request.setAttribute("mealList", MealsUtil.filteredByStreams(mealDao.findAll(), MealsUtil.CALORIES_PER_DAY));
             log.debug("action=null, setAttribute(\"mealList\"), forward=MEALS");
         }
         RequestDispatcher view = request.getRequestDispatcher(forward);
@@ -91,7 +92,7 @@ public class MealServlet extends HttpServlet {
             log.debug("updating new Meal, id=" + id + ", updated Meal=" + mealDao.findById(id).toString());
         }
         RequestDispatcher view = req.getRequestDispatcher(MEALS);
-        req.setAttribute("mealList", mealDao.findAll());
+        req.setAttribute("mealList", MealsUtil.filteredByStreams(mealDao.findAll(), MealsUtil.CALORIES_PER_DAY));
         view.forward(req, resp);
     }
 }

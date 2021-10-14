@@ -13,15 +13,17 @@ import java.util.stream.Stream;
 
 public class MealsUtil {
     public static final int CALORIES_PER_DAY = 2000;
+    public static final LocalTime START_TIME = LocalTime.of(7, 0);
+    public static final LocalTime END_TIME = LocalTime.of(12, 0);
 
     public static void main(String[] args) {
         List<Meal> meals = generateMealList();
 
-        List<MealTo> mealsTo = filteredByStreams(meals, LocalTime.of(7, 0), LocalTime.of(12, 0), CALORIES_PER_DAY);
+        List<MealTo> mealsTo = filteredByStreams(meals, CALORIES_PER_DAY);
         mealsTo.forEach(System.out::println);
     }
 
-    public static List<MealTo> filteredByStreams(List<Meal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
+    public static List<MealTo> filteredByStreams(List<Meal> meals, int caloriesPerDay) {
         Map<LocalDate, Integer> caloriesSumByDate = meals.stream()
                 .collect(
                         Collectors.groupingBy(Meal::getDate, Collectors.summingInt(Meal::getCalories))
