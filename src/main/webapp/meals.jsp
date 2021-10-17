@@ -10,9 +10,14 @@
         .normal {
             color: green;
         }
-
         .excess {
             color: red;
+        }
+    </style>
+    <style type="text/css" >
+        FORM {
+            border: 1px solid black; /* Рамка вокруг таблицы */
+            width: 719px;
         }
     </style>
 </head>
@@ -21,11 +26,60 @@
     <h3><a href="index.html">Home</a></h3>
     <hr/>
     <h2>Meals</h2>
-<%--    <a href="meals?action=create">Add Meal</a>--%>
+    <br>
+    <form method="get" action="meals">
+        <style type="text/css" >
+            dl {
+                margin-top: 5px;
+                margin-bottom: 5px;
+                margin-left: 5px;
+            }
+        </style>
+        <table cellpadding="3">
+            <tr align="center">
+                <th>От даты (включая)</th>
+                <th>До даты (включая)</th>
+                <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                <th>От времени (включая)</th>
+                <th>До времени (исключая)</th>
+            </tr>
+            <tr align="center">
+                <td>
+                    <input type="date" id="startDate" autocomplete="off" name="startDate">
+                </td>
+                <td>
+                    <input type="date" id="endDate" autocomplete="off" name="endDate">
+                </td>
+                <td>
+                    <pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</pre>
+                </td>
+                <td>
+                    <input type="time" id="startTime" autocomplete="off" name="startTime">
+                </td>
+                <td>
+                    <input type="time" id="endTime" autocomplete="off" name="endTime">
+                </td>
+            </tr>
+<%--            <tr>--%>
+<%--                <td>--%>
+<%--                    <button type="submit">Apply Filter</button>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <button type="reset">Reset</button>--%>
+<%--                </td>--%>
+<%--            </tr>--%>
+        </table>
+    <dl>
+        <button type="submit">Apply Filter</button>
+        <button type="reset">Reset</button>
+    </dl>
+    </form>
+    <br>
+    <%--    <a href="meals?action=create">Add Meal</a>--%>
     <input type="button" value="Add meal"
            onclick="window.location.href = 'meals?action=create'">
     <br><br>
-    <table border="1" cellpadding="8" cellspacing="0">
+    <table border="1" cellpadding="6" cellspacing="0">
         <thead>
         <tr>
             <th>Date</th>
@@ -46,12 +100,12 @@
                 <td>${meal.description}</td>
                 <td>${meal.calories}</td>
                 <td>
-<%--                    <a href="meals?action=update&id=${meal.id}">Update</a>--%>
+                        <%--                    <a href="meals?action=update&id=${meal.id}">Update</a>--%>
                     <input type="button" value="Update"
                            onclick="window.location.href = 'meals?action=update&id=${meal.id}'"/>
                 </td>
                 <td>
-<%--                    <a href="meals?action=delete&id=${meal.id}">Delete</a>--%>
+                        <%--                    <a href="meals?action=delete&id=${meal.id}">Delete</a>--%>
                     <input type="button" value="Delete"
                            onclick="window.location.href = 'meals?action=delete&id=${meal.id}'"/>
                 </td>
