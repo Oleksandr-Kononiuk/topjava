@@ -21,7 +21,9 @@
     <h3><a href="index.html">Home</a></h3>
     <hr/>
     <h2>Meals</h2>
-    <a href="meals?action=create">Add Meal</a>
+<%--    <a href="meals?action=create">Add Meal</a>--%>
+    <input type="button" value="Add meal"
+           onclick="window.location.href = 'meals?action=create'">
     <br><br>
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
@@ -29,8 +31,7 @@
             <th>Date</th>
             <th>Description</th>
             <th>Calories</th>
-            <th></th>
-            <th></th>
+            <th colspan="2">Operations</th>
         </tr>
         </thead>
         <c:forEach items="${meals}" var="meal">
@@ -44,8 +45,16 @@
                 </td>
                 <td>${meal.description}</td>
                 <td>${meal.calories}</td>
-                <td><a href="meals?action=update&id=${meal.id}">Update</a></td>
-                <td><a href="meals?action=delete&id=${meal.id}">Delete</a></td>
+                <td>
+<%--                    <a href="meals?action=update&id=${meal.id}">Update</a>--%>
+                    <input type="button" value="Update"
+                           onclick="window.location.href = 'meals?action=update&id=${meal.id}'"/>
+                </td>
+                <td>
+<%--                    <a href="meals?action=delete&id=${meal.id}">Delete</a>--%>
+                    <input type="button" value="Delete"
+                           onclick="window.location.href = 'meals?action=delete&id=${meal.id}'"/>
+                </td>
             </tr>
         </c:forEach>
     </table>

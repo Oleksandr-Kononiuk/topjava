@@ -18,9 +18,6 @@ public class InMemoryMealRepository implements MealRepository {
     private final AtomicInteger counter = new AtomicInteger(0);
 //todo refactor by using ValidationUtil
 
-//    {
-//        MealsUtil.meals.forEach(() -> this.save());
-//    }
 
     @Override
     public Meal save(int userId, Meal meal) {
@@ -58,7 +55,7 @@ public class InMemoryMealRepository implements MealRepository {
             throw new NotFoundException("User not found with id:" + userId);
         return repository.get(userId).values()
                 .stream()
-                .sorted(Comparator.comparing(Meal::getDate).reversed())
+                .sorted(Comparator.comparing(Meal::getDateTime).reversed())
                 .collect(Collectors.toList());
     }
 }

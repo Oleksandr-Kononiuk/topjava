@@ -37,14 +37,15 @@
         </dl>
         <dl>
             <dt>Description:</dt>
-            <dd><input type="text" value="${meal.description}" size=40 name="description" required></dd>
+            <dd><input type="text" value="${meal.description}" size=20 name="description" required></dd>
         </dl>
         <dl>
             <dt>Calories:</dt>
-            <dd><input type="number" value="${meal.calories}" name="calories" required></dd>
+            <dd><input type="number" step="50" value="${meal.calories}" name="calories" required></dd>
         </dl>
         <button type="submit">Save</button>
-        <button onclick="window.history.back()" type="button">Cancel</button>
+        <button type="reset">Clear</button>
+        <button type="button" onclick="window.history.back()">Cancel</button>
     </form>
 </section>
 </body>

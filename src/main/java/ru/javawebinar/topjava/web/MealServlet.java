@@ -2,11 +2,9 @@ package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.repository.MealRepository;
-import ru.javawebinar.topjava.repository.inmemory.InMemoryMealRepository;
-import ru.javawebinar.topjava.service.MealService;
-import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 
 import javax.servlet.ServletException;
@@ -18,19 +16,22 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
-import static ru.javawebinar.topjava.web.SecurityUtil.authUserCaloriesPerDay;
-import static ru.javawebinar.topjava.web.SecurityUtil.authUserId;
-
 public class MealServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(MealServlet.class);
 
     private MealRestController controller;
+    private ConfigurableApplicationContext appCtx;
 
     @Override
     public void init() {
-        controller = new MealRestController(
-                new MealService(
-                        new InMemoryMealRepository()));
+        appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml");
+        controller = appCtx.getBean(MealRestController.class);
+    }
+
+    @Override
+    public void destroy() {
+        appCtx.close();
+        super.destroy();
     }
 
     @Override

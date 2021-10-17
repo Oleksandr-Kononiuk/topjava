@@ -2,7 +2,6 @@ package ru.javawebinar.topjava.web.meal;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.to.MealTo;
@@ -22,11 +21,19 @@ public class MealRestController {
 
     public MealRestController(MealService service) {
         this.service = service;
+        {
+            MealsUtil.meals.forEach(this::save);
+        }
     }
 
     public Meal save(Meal meal) {
         log.info("save: user id {}, {}", authUserId(), meal.toString());
         return service.create(authUserId(), meal);
+    }
+
+    public void update(Meal meal) {
+        log.info("update: user id {}, {}", authUserId(), meal.toString());
+        service.update(authUserId(), meal);
     }
 
     public void delete(int id) {
@@ -41,11 +48,7 @@ public class MealRestController {
 
     public List<MealTo> getAll() {
         log.info("getAll: user id {}", authUserId());
+        //todo Отдать свою еду, отфильтрованную по startDate, startTime, endDate, endTime
         return MealsUtil.getTos(service.getAll(authUserId()), authUserCaloriesPerDay());
-    }
-
-    public void update(Meal meal) {
-        log.info("update: user id {}, {}", authUserId(), meal.toString());
-        service.update(authUserId(), meal);
     }
 }
