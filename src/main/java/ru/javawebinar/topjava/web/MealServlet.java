@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 
 import javax.servlet.ServletException;
@@ -21,6 +22,7 @@ public class MealServlet extends HttpServlet {
 
     private MealRestController controller;
     private ConfigurableApplicationContext appCtx;
+    private MealRepository repository;
 
     @Override
     public void init() {

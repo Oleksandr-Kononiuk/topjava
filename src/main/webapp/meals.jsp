@@ -60,14 +60,6 @@
                     <input type="time" id="endTime" autocomplete="off" name="endTime">
                 </td>
             </tr>
-<%--            <tr>--%>
-<%--                <td>--%>
-<%--                    <button type="submit">Apply Filter</button>--%>
-<%--                </td>--%>
-<%--                <td>--%>
-<%--                    <button type="reset">Reset</button>--%>
-<%--                </td>--%>
-<%--            </tr>--%>
         </table>
     <dl>
         <button type="submit">Apply Filter</button>
