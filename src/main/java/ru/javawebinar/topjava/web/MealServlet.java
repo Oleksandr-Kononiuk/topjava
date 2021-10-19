@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 
 import javax.servlet.ServletException;
@@ -13,16 +12,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
+
 
 public class MealServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(MealServlet.class);
 
     private MealRestController controller;
     private ConfigurableApplicationContext appCtx;
-    private MealRepository repository;
 
     @Override
     public void init() {
@@ -72,8 +73,33 @@ public class MealServlet extends HttpServlet {
                 break;
             case "all":
             default:
-                log.info("getAll");
-                request.setAttribute("meals", controller.getAll());
+                String reset = request.getParameter("reset");
+                if (reset != null) {
+                    log.info("reset filters and getAll");
+                    response.sendRedirect("meals");
+                    break;
+                } else {
+                    String startDate = request.getParameter("startDate");
+                    String endDate = request.getParameter("endDate");
+                    String startTime = request.getParameter("startTime");
+                    String endTime = request.getParameter("endTime");
+
+                    if (startDate != null || endDate != null || startTime != null || endTime != null) {
+                        log.info("getAll with filter by date from {} to {} and time from {} to {}"
+                                , startDate.isEmpty() ? "empty" : startDate, endDate.isEmpty() ? "empty" : endDate
+                                , startTime.isEmpty() ? "empty" : startTime, endTime.isEmpty() ? "empty" : endTime);
+
+                        request.setAttribute("meals", controller.getAllWithFilter(
+                                startDate == null || startDate.isEmpty() ? LocalDate.MIN : LocalDate.parse(startDate),
+                                endDate == null || endDate.isEmpty() ? LocalDate.MAX : LocalDate.parse(endDate),
+                                startTime == null || startTime.isEmpty() ? LocalTime.MIN : LocalTime.parse(startTime),
+                                endTime == null || endTime.isEmpty() ? LocalTime.MAX : LocalTime.parse(endTime)
+                        ));
+                    } else {
+                        log.info("getAll");
+                        request.setAttribute("meals", controller.getAll());
+                    }
+                }
                 request.getRequestDispatcher("/meals.jsp").forward(request, response);
                 break;
         }

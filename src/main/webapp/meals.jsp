@@ -45,25 +45,25 @@
             </tr>
             <tr align="center">
                 <td>
-                    <input type="date" id="startDate" autocomplete="off" name="startDate">
+                    <input type="date" id="startDate" autocomplete="off" name="startDate" value="${param.startDate}">
                 </td>
                 <td>
-                    <input type="date" id="endDate" autocomplete="off" name="endDate">
+                    <input type="date" id="endDate" autocomplete="off" name="endDate" value="${param.endDate}">
                 </td>
                 <td>
                     <pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</pre>
                 </td>
                 <td>
-                    <input type="time" id="startTime" autocomplete="off" name="startTime">
+                    <input type="time" id="startTime" autocomplete="off" name="startTime" value="${param.startTime}">
                 </td>
                 <td>
-                    <input type="time" id="endTime" autocomplete="off" name="endTime">
+                    <input type="time" id="endTime" autocomplete="off" name="endTime" value="${param.endTime}">
                 </td>
             </tr>
         </table>
     <dl>
         <button type="submit">Apply Filter</button>
-        <button type="reset">Reset</button>
+        <button type="submit" name="reset" value="reset">Reset</button>
     </dl>
     </form>
     <br>
