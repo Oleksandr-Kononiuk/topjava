@@ -38,7 +38,7 @@ public class InMemoryMealRepository implements MealRepository {
     @Override
     public boolean delete(int userId, int id) {
         if (repository.get(userId) == null)
-            throw new NotFoundException("User not found with id:" + userId); // todo return false???
+            throw new NotFoundException("User not found with id:" + userId); // todo throw exep move to service
         return repository.get(userId).remove(id) != null;
     }
 
