@@ -10,7 +10,7 @@ public class DateTimeUtil {
         return value.compareTo(start) >= 0 && value.compareTo(end) < 0;
     }
 
-    public static String toString(LocalDateTime ldt) { //todo
+    public static String toString(LocalDateTime ldt) {
         return ldt == null ? "" : ldt.format(DATE_TIME_FORMATTER);
     }
 }
