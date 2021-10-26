@@ -26,6 +26,9 @@ public class Meal extends AbstractBaseEntity {
         super(id);
     }
 
+    public Meal() {
+    }
+
     public LocalDateTime getDateTime() {
         return dateTime;
     }

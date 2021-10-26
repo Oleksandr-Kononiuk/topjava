@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.repository.inmemory;
 
 import org.springframework.stereotype.Repository;
+import ru.javawebinar.topjava.UserTestData;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
 
@@ -36,11 +37,6 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     @Override
-    public boolean delete(int id) {
-        return usersMap.remove(id) != null;
-    }
-
-    @Override
     public User get(int id) {
         return usersMap.get(id);
     }
@@ -58,5 +54,11 @@ public class InMemoryUserRepository implements UserRepository {
                 .filter(u -> email.equals(u.getEmail()))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public void init() {
+        usersMap.clear();
+        usersMap.put(UserTestData.USER_ID, UserTestData.user);
+        usersMap.put(UserTestData.ADMIN_ID, UserTestData.admin);
     }
 }

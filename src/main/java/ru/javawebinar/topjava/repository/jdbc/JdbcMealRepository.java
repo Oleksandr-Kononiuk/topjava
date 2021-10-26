@@ -1,9 +1,12 @@
 package ru.javawebinar.topjava.repository.jdbc;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.Meal;
@@ -13,17 +16,21 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
+@Primary
 public class JdbcMealRepository implements MealRepository {
     private static final BeanPropertyRowMapper<Meal> ROW_MAPPER = BeanPropertyRowMapper.newInstance(Meal.class);
 
     private final JdbcTemplate jdbcTemplate;
     private final SimpleJdbcInsert insertMeal;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public JdbcMealRepository(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    @Autowired
+    public JdbcMealRepository(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.insertMeal = new SimpleJdbcInsert(jdbcTemplate)
                 .withTableName("meals")
                 .usingGeneratedKeyColumns("id");
+        this.jdbcTemplate = jdbcTemplate;
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
     @Override
@@ -39,9 +46,9 @@ public class JdbcMealRepository implements MealRepository {
             Number newKey = insertMeal.executeAndReturnKey(map);
             meal.setId(newKey.intValue());
 
-        } else if (jdbcTemplate.update("UPDATE meals " +
+        } else if (namedParameterJdbcTemplate.update("UPDATE meals " +
                 "SET date_time=:date_time, description=:description, calories=:calories " +
-                "WHERE id=:id AND user_id=:user_id", map) == 0) {
+                "WHERE id=:id AND user_id=:user_id", map) == 0) { //todo do not use map?
             return null;
         }
         return meal;
@@ -68,7 +75,7 @@ public class JdbcMealRepository implements MealRepository {
     @Override
     public List<Meal> getBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
         return jdbcTemplate.query("SELECT * FROM meals " +
-                "WHERE user_id=? AND date_time >= timestamp '?' AND date_time < timestamp '?'" +
+                "WHERE user_id=? AND (date_time >= ? AND date_time < ?) " +
                 "ORDER BY date_time DESC", ROW_MAPPER, userId, startDateTime, endDateTime);
     }
 }
