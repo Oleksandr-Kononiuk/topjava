@@ -115,7 +115,7 @@ public class MealServiceTest {
     @Test
     public void update() {
         Meal updated = getUpdated();
-        mealService.update(updated, TEST_USER_ID);
+        mealService.update(getUpdated(), TEST_USER_ID);
         Meal expected = mealService.get(ACTUAL_MEAL_ID, TEST_USER_ID);
 
         assertEquals(expected, updated);
@@ -133,7 +133,7 @@ public class MealServiceTest {
     @Test
     public void create() {
         Meal actual = getNew();
-        Meal expected = mealService.create(actual, TEST_USER_ID);
+        Meal expected = mealService.create(getNew(), TEST_USER_ID);
         Integer createdId = expected.getId();
         actual.setId(createdId);
         assertEquals(expected, actual);
