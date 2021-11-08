@@ -3,6 +3,7 @@ package ru.javawebinar.topjava.service;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.Stopwatch;
 import org.junit.runner.Description;
 import org.junit.runner.RunWith;
@@ -15,7 +16,14 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.javawebinar.topjava.ActiveDbProfileResolver;
+import ru.javawebinar.topjava.MealTestData;
+import ru.javawebinar.topjava.UserTestData;
+import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.model.User;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static org.slf4j.LoggerFactory.getLogger;
@@ -31,6 +39,12 @@ public abstract class AbstractServiceTest {
 
     @Autowired
     private CacheManager cacheManager;
+
+    @Autowired
+    private MealService mealService;
+
+    @Autowired
+    private UserService userService;
 
     private static final StringBuilder results = new StringBuilder();
     private static final Logger log = getLogger("result");
@@ -57,6 +71,42 @@ public abstract class AbstractServiceTest {
 
     @Before
     public void setup() {
-        cacheManager.getCache("users").clear();
+        if (this.getClass().getSimpleName().equals("MealServiceTest")) {
+            cacheManager.getCache("meals").clear();
+        }
+        if (this.getClass().getSimpleName().equals("UserServiceTest")) {
+            cacheManager.getCache("users").clear();
+        }
+    }
+
+    @Test
+    public void getUserMeals() {
+        Map<User, List<Meal>> m = new HashMap<>();
+        if (this.getClass().getSimpleName().equals("UserServiceTest")) {
+            m = userService.getUserMeals(UserTestData.ADMIN_ID);
+        }
+        if (this.getClass().getSimpleName().equals("MealServiceTest")) {
+            m = mealService.getUserMeals(UserTestData.ADMIN_ID);
+        }
+        List<Meal> actualAdminMeals = MealTestData.getAdminMeals();
+        List<Meal> expectedAdminMeals = m.get(UserTestData.admin);
+
+        UserTestData.USER_MATCHER.assertMatch(m.keySet().iterator().next(), UserTestData.admin);
+        MealTestData.MEAL_MATCHER.assertMatch(expectedAdminMeals, actualAdminMeals);
+    }
+
+    @Test
+    public void getUserMeal() {
+        Map<User, Meal> m = new HashMap<>();
+        if (this.getClass().getSimpleName().equals("UserServiceTest")) {
+            m = userService.getUserMeal(UserTestData.USER_ID, MealTestData.MEAL1_ID);
+        }
+        if (this.getClass().getSimpleName().equals("MealServiceTest")) {
+            m = mealService.getUserMeal(UserTestData.USER_ID, MealTestData.MEAL1_ID);
+        }
+        Meal expectedMeal = m.get(UserTestData.user);
+
+        UserTestData.USER_MATCHER.assertMatch(m.keySet().iterator().next(), UserTestData.user);
+        MealTestData.MEAL_MATCHER.assertMatch(expectedMeal, MealTestData.meal1);
     }
 }
