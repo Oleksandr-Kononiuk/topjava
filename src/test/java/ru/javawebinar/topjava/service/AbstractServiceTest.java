@@ -13,6 +13,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.javawebinar.topjava.ActiveDbProfileResolver;
+import ru.javawebinar.topjava.Profiles;
 import ru.javawebinar.topjava.TimingRules;
 
 import static org.junit.Assert.assertThrows;
@@ -48,6 +49,6 @@ public abstract class AbstractServiceTest {
     }
 
     public boolean isJdbc() {
-        return env.acceptsProfiles("jdbc");
+        return env.acceptsProfiles(Profiles.JDBC);
     }
 }
