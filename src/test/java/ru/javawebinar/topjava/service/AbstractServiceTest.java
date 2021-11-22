@@ -49,6 +49,7 @@ public abstract class AbstractServiceTest {
     }
 
     public boolean isJdbc() {
+        //return false;
         return env.acceptsProfiles(Profiles.JDBC);
     }
 }
