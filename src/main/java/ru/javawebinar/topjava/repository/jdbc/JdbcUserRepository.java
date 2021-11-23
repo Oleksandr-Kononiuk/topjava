@@ -13,6 +13,9 @@ import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.util.*;
 
 @Repository
@@ -39,7 +42,7 @@ public class JdbcUserRepository implements UserRepository {
 
     @Override
     @Transactional
-    public User save(User user) {
+    public User save(@NotNull User user) {
         BeanPropertySqlParameterSource parameterSource = new BeanPropertySqlParameterSource(user);
 
         if (user.isNew()) {
@@ -64,7 +67,7 @@ public class JdbcUserRepository implements UserRepository {
 
     @Override
     @Transactional
-    public boolean delete(int id) {
+    public boolean delete(@Positive int id) {
         int isDeleted = jdbcTemplate.update("DELETE FROM users WHERE id=?", id);
         if (isDeleted != 0 ) {
             deleteRoles(id);
@@ -73,14 +76,13 @@ public class JdbcUserRepository implements UserRepository {
     }
 
     @Override
-    public User get(int id) {
+    public User get(@Positive int id) {
         List<User> users = jdbcTemplate.query("SELECT * FROM users WHERE id=?", ROW_MAPPER, id);
         return setRole(DataAccessUtils.singleResult(users));
     }
 
     @Override
-    public User getByEmail(String email) {
-//        return jdbcTemplate.queryForObject("SELECT * FROM users WHERE email=?", ROW_MAPPER, email);
+    public User getByEmail(@Email String email) {
         List<User> users = jdbcTemplate.query("SELECT * FROM users WHERE email=?", ROW_MAPPER, email);
         return setRole(DataAccessUtils.singleResult(users));
     }
