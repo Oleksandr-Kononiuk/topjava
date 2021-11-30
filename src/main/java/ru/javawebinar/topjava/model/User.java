@@ -157,4 +157,8 @@ public class User extends AbstractNamedEntity {
                 ", caloriesPerDay=" + caloriesPerDay +
                 '}';
     }
+
+    public void setMeals(List<Meal> meals) {
+        this.meals = meals;
+    }
 }
