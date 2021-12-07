@@ -32,6 +32,7 @@
         <!--    Tests  -->
         <junit.jupiter.version>5.8.1</junit.jupiter.version>
         <assertj.version>3.21.0</assertj.version>
+        <hamcrest.version>2.2</hamcrest.version>
 
         <!-- Hibernate -->
         <hibernate.version>5.6.1.Final</hibernate.version>
@@ -252,7 +253,7 @@
                     <artifactId>jquery</artifactId>
                 </exclusion>
                 <exclusion>
-<!--                https://getbootstrap.com/docs/4.5/components/popovers         -->
+                    <!--                https://getbootstrap.com/docs/4.5/components/popovers         -->
                     <groupId>org.webjars</groupId>
                     <artifactId>popper.js</artifactId>
                 </exclusion>
@@ -302,8 +303,15 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>${junit.jupiter.version}</version>
-            <scope>compile</scope>
+            <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-core</artifactId>
+            <version>${hamcrest.version}</version>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
