@@ -1,13 +1,22 @@
-const userAjaxUrl = "meals/";
+var ctx;
 
-// https://stackoverflow.com/a/5064235/548473
-const ctx = {
-    ajaxUrl: userAjaxUrl
-};
+function updateFilteredTable() {
+    $.ajax({
+        type: "GET",
+        url: "profile/meals/filter",
+        data: $("#filter").serialize()
+    }).done(updateTableByData);
+}
+
+function clearFilter() {
+    $("#filter")[0].reset();
+    $.get("profile/meals/", updateTableByData);
+}
 
 $(function () {
-    makeEditable(
-        $("#datatable").DataTable({
+    ctx = {
+        ajaxUrl: "profile/meals/",
+        datatableApi: $("#datatable").DataTable({
             "paging": false,
             "info": true,
             "columns": [
@@ -32,9 +41,11 @@ $(function () {
             "order": [
                 [
                     0,
-                    "asc"
+                    "desc"
                 ]
             ]
-        })
-    );
+        }),
+        updateTable: updateFilteredTable
+    };
+    makeEditable();
 });

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/meals", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "profile/meals", produces = MediaType.APPLICATION_JSON_VALUE)
 public class MealUIController extends AbstractMealController {
 
     @DeleteMapping("/{id}")
@@ -42,10 +42,10 @@ public class MealUIController extends AbstractMealController {
     @Override
     @GetMapping("/filter")
     public List<MealTo> getBetween(
-            @RequestParam(name = "startDate") @Nullable LocalDate startDate,
-            @RequestParam(name = "startTime") @Nullable LocalTime startTime,
-            @RequestParam(name = "endDate") @Nullable LocalDate endDate,
-            @RequestParam(name = "endTime") @Nullable LocalTime endTime) {
+            @RequestParam @Nullable LocalDate startDate,
+            @RequestParam @Nullable LocalTime startTime,
+            @RequestParam @Nullable LocalDate endDate,
+            @RequestParam @Nullable LocalTime endTime) {
         return super.getBetween(startDate, startTime, endDate, endTime);
     }
 
