@@ -55,4 +55,11 @@ public class UserService {
     public User getWithMeals(int id) {
         return checkNotFoundWithId(repository.getWithMeals(id), id);
     }
+
+    public void enable(int id, boolean enable) {
+        //refactor -> user reference
+        User u = repository.get(id);
+        u.setEnabled(enable);
+        repository.save(u);
+    }
 }

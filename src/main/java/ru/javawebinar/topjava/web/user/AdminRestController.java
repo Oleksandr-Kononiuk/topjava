@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping(value = AdminRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdminRestController extends AbstractUserController {
 
-    static final String REST_URL = "/rest/admin/users";
+    static final String REST_URL = "rest/admin/users";
 
     @Override
     @GetMapping
@@ -60,5 +60,11 @@ public class AdminRestController extends AbstractUserController {
     @GetMapping("/{id}/with-meals")
     public User getWithMeals(@PathVariable int id) {
         return super.getWithMeals(id);
+    }
+
+    @PatchMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void enable(@PathVariable int id, @RequestParam boolean enable) {
+        super.enable(id, enable);
     }
 }
