@@ -16,7 +16,7 @@
             <div class="col-5 offset-3">
                 <h3>${userTo.name} <spring:message code="${register ? 'app.register' : 'app.profile'}"/></h3>
                 <form:form class="form-group" modelAttribute="userTo" method="post" action="${register ? 'profile/register' : 'profile'}"
-                           charset="utf-8" accept-charset="UTF-8">
+                           charset="UTF-8" accept-charset="UTF-8">
 
                     <topjava:inputField labelCode="user.name" name="name"/>
                     <topjava:inputField labelCode="user.email" name="email"/>

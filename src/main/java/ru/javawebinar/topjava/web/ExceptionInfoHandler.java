@@ -80,14 +80,16 @@ public class ExceptionInfoHandler {
     @ExceptionHandler({IllegalRequestDataException.class, MethodArgumentTypeMismatchException.class,
             HttpMessageNotReadableException.class, BindException.class})
     public ErrorInfo illegalRequestDataError(HttpServletRequest req, BindException e) {
-        String[] bindingResultMessages = getErrorResponseStrings(e.getBindingResult());
+        String[] bindingResultMessages = getErrorResponseStrings(e);
         return logAndGetErrorInfo(req, e, false,
                 messageSourceAccessor.getMessage(errorTypeMessage.get(VALIDATION_ERROR)), bindingResultMessages);
     }
 
-    private String[] getErrorResponseStrings(BindingResult result) {
-        return result.getFieldErrors().stream()
-                .map(fe -> String.format("[%s] %s", messageSourceAccessor.getMessage("user." + fe.getField()), fe.getDefaultMessage()))
+    private String[] getErrorResponseStrings(BindException e) {
+        return e.getBindingResult().getFieldErrors().stream()
+                .map(fe -> String.format("[%s] %s",
+                        messageSourceAccessor.getMessage(e.getObjectName() + "." + fe.getField()),
+                        fe.getDefaultMessage()))
                 .toArray(String[]::new);
     }
 
